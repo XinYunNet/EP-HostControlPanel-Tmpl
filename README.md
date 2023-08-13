@@ -11,4 +11,5 @@ unzip -q Xinyuntmep1.zip -d /vhs/kangle/nodewww/webftp/vhost/view
 ![image](https://github.com/XinYunNet/EP-HostControlPanel-Tmpl/assets/114330495/7721f7d9-a918-4d35-9593-87ad714527c6)
 ![image](https://github.com/XinYunNet/EP-HostControlPanel-Tmpl/assets/114330495/3f03ae92-6f7d-41c6-9dc5-49c3b666a7f1)
 个人认为很好看，你可以自己改改颜色什么的
+模板还支持双语
 留个版权信息就行
