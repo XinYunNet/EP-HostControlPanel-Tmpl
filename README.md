@@ -1,10 +1,10 @@
 # EP-HostControlPanel-Tmpl
 一键安装脚本：wget -O ep1.sh http://api.xinynet.cn/API/EP-Template/ep1.sh && bash ep1.sh
 脚本为香港节点，实测速度不怎样，建议自行下载包后一条条执行：
-yum install zip
-rm -rf /vhs/kangle/nodewww/webftp/vhost/view/Xinyuntmep1/*
-cd /vhs/kangle/nodewww/webftp/vhost/view
-wget -c -nd -np 源码下载地址（记住，必须压缩文件夹，不是直接压缩文件！！）
+<br>yum install zip
+<br>rm -rf /vhs/kangle/nodewww/webftp/vhost/view/Xinyuntmep1/*
+<br>cd /vhs/kangle/nodewww/webftp/vhost/view
+<br>wget -c -nd -np 源码下载地址（记住，必须压缩文件夹，不是直接压缩文件！！）
 unzip -q Xinyuntmep1.zip -d /vhs/kangle/nodewww/webftp/vhost/view
 
 主机页面:
