@@ -1,0 +1,97 @@
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>自定义错误页</h1>
+            <div class="section-header-breadcrumb">
+            </div>
+          </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card-box">
+
+                            <div class="row">
+							<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+							<div style=" height:7px;"></div>
+
+	<table class="table">
+		<thead class="thead-default">
+			<tr>
+				<th>操作</th>
+				<th>错误类型</th>
+				<th>url</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{foreach from=$list item=row}}
+		<tr>
+			<td>[<a href="javascript:if(confirm('确定删除{{$row.name}}？')){location='?c=info&a=delErrorPage&name={{$row.name}}';}" title="删除域名">删除</a>]</td>
+			<td>{{$row.name}}</td>
+			<td>{{$row.value}}</td>
+		</tr>
+		{{/foreach}}
+		</tbody>
+		<tr>
+			<td>共计 {{$sum}} 条记录</td>
+		</tr>
+	</table>
+
+                          <br /><br /><div class="col-md-12">
+						  <span style="font-size:16px;"><b>{{if $action=='add'}}增加自定义错误{{else}}修改自定义错误{{/if}}</b></span><hr /><div style="height:6px;"></div>
+						  	<form name='nodeform' action="?c=info&a=addErrorPage" method="post" class="form-horizontal">
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">错误码</label>
+								 <div class="col-sm-4">
+						  <input type='text' name='name' placeholder="" class="form-control" />
+                                  </div>
+								 <div class="col-sm-4">
+                                    * 例：404                                 </div>
+                              </div>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">URL地址</label>
+								 <div class="col-sm-4">
+						  <input type='text' name='value' placeholder="" size="50" class="form-control" />
+                                  </div>
+								 <div class="col-sm-4">
+                                    * 例：http://www.xxx.com/404.html                                 </div>
+                              </div>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+								 <div class="col-sm-4">
+						  <input type="submit" value='确定' class="btn btn-primary" />
+                                  </div>
+                              </div>
+
+						   </form>
+						   </div>
+</div></div></div></div></div>
+			   <p><div class="label label-info">帮助文档</div> &nbsp; <a href="" data-toggle="modal" data-target="#myModal">常见HTTP网页错误码及含义</a></p>
+   <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+               <h4 id="myModalLabel" class="modal-title">HTTP网页错误代码大全</h4>
+            </div>
+            <div class="modal-body">
+			
+			<p>HTTP 400 - 请求无效</p>
+			<p>HTTP 401 - 请求无效，未授权</p>
+			<p>HTTP 403 - 禁止访问</p>
+			<p>HTTP 404- 无法找到文件</p>
+			<p>HTTP 405 - 资源被禁止</p>
+			<p>HTTP 406 - 无法接受</p>
+			<p>HTTP 407 - 要求代理身份验证</p>
+			<p>HTTP 500 - 内部服务器错误</p>
+			<p>HTTP 501 - 页眉值指定了未实现的配置</p>
+			<p>HTTP 502 - 网关错误</p>
+			<p>HTTP 503 - 服务不可用</p>
+			<p>HTTP 504 - 网关超时</p>
+			<p>HTTP 505 - http版本不受支持</p>
+			
+			</div>
+            <div class="modal-footer">
+               <button type="button" data-dismiss="modal" class="btn btn-default">关闭</button>
+            </div>
+         </div>
+      </div>
+   </div>

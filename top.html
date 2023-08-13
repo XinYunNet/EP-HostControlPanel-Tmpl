@@ -1,0 +1,196 @@
+<script type='text/javascript'>
+	jQuery(document).ready(function() {
+		jQuery(".wid_left").mouseover(function() {
+			jQuery(this).addClass('onMouseOver');
+		});
+		jQuery(".wid_left").mouseout(function() {
+			jQuery(this).removeClass('onMouseOver');
+		});
+	});
+</script>
+<script type='text/javascript'>
+var msg = '{{$msg}}';
+	function changePassword() {
+	}
+	function rebootProcess()
+	{
+		if (confirm("确定要重启吗？这将对你现在运行中的网站中断请求！")) {
+			$.get("?c=index&a=rebootProcess", function(data) {
+				alert(data);
+			});
+		}
+	}
+	jQuery(document).ready(function() {
+		jQuery(".item").mouseover(function() {
+			jQuery(this).addClass('onMouseOver');
+		});
+		jQuery(".item").mouseout(function() {
+			jQuery(this).removeClass('onMouseOver');
+		});
+		if (msg != '') {
+			var dlog = art.dialog({id:'id232',time:3,content:msg,title:'提示',icon: 'warning',top:'53%'});
+		}
+	});
+	var webmit = '{{$user.web_quota}}';//{{$quota.web_limit}}在linux下得不到
+	if (webmit == '') {
+		webmit = 0;
+	}
+	if (webmit > 0) {
+		var web_used = '{{$quota.web_used}}';
+		if (web_used == '') {
+			web_used = 0;
+		}
+		var web_use_len = (web_used / webmit) * 100;
+		//web_use_len = 30;
+		var dbmit = '{{$quota.db_limit}}';
+		var db_used = '{{$quota.db_used}}';
+		if (db_used == '') {
+			db_used = 0;
+		}
+		if (dbmit == "") {
+			dbmit = 0;
+		}
+		if (dbmit > 0) {
+			var db_use_len = (db_used / dbmit) * 100;
+		}
+		jQuery(document).ready(function() {
+			if (web_use_len != null && web_use_len != 'undefined') {
+								if (web_use_len < 1) {
+									web_use_len = 1;
+								}
+								if (web_use_len > 100) {
+									web_use_len = 100;
+								}
+								jQuery("#webdd").html("网页空间：<div class='web_ww' title='大小："
+														+ webmit
+														+ "M   已使用："
+														+ web_use_len.toFixed(2)
+														+ "%'><div class='use_web' style='width:"
+														+ web_use_len.toFixed(2)
+														+ "%'></div></div>");
+							}
+							if (db_use_len != null && db_use_len != 'undefined') {
+								if (db_use_len < 1) {
+									db_use_len = 1;
+								}
+								if (db_use_len > 100) {
+									db_use_len = 100;
+								}
+								jQuery("#db").html("数据空间：<div class='web_ww' title='大小："
+														+ dbmit
+														+ "M   已使用："
+														+ db_use_len.toFixed(2)
+														+ "%'><div class='use_web' style='width:"
+														+ db_use_len.toFixed(2)
+														+ "%'  ></div></div>");
+							}
+						});
+	}
+</script>
+        <!-- Navigation Bar-->
+<body>
+  <div id="app">
+    <div class="main-wrapper">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar">
+        <form class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+          </ul>
+        </form>
+        <ul class="navbar-nav navbar-right">
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg nav-link-user"><i class="fas fa-language" style="vertical-align: -2px; padding-right: 2px;"></i> 简体中文</a>
+            <div class="dropdown-menu dropdown-menu-right"> <a href="##" class="dropdown-item has-icon" onclick="changeLang('en')"> 🇬🇧 English </a> <a href="##" class="dropdown-item has-icon" onclick="changeLang('zh-cn')"> 🇨🇳 简体中文 </a> </div>
+          </li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="http://q1.qlogo.cn/g?b=qq&nk=2129277481&s=640" class="rounded-circle mr-1">
+              <div class="d-sm-none d-lg-inline-block">Hi, {{$vhost}} </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right"> <a href="?c=index&a=main" class="dropdown-item has-icon"> <i class="fas fa-user"></i> 面板首页 </a> 
+              <div class="dropdown-divider"></div>
+              <a href="?c=session&a=logout" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i> 退出登录 </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-sidebar sidebar-style-2">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand"> <a href="/">管理面板 | 控制台</a> </div>
+          <div class="sidebar-brand sidebar-brand-sm"> <a href="/">控制</a> </div>
+          <ul class="sidebar-menu">
+            <li><a class="nav-link" href="?c=index&a=main"><i class="fab fa-fort-awesome"></i> <span>面板首页</span></a></li>
+			
+			<li><a class="nav-link" href="?c=domain&a=show"><i class="fas fa-server"></i> <span>域名管理</span></a></li>
+			{{if $user.cdn==1}}
+			<li><a class="nav-link" href="?c=anticc&a=anticcFrom"><i class="fas fa-stream"></i> <span>防CC攻击</span></a></li>
+			{{/if}}
+            <li class="menu-header">使用</li>
+			  <li class="dropdown"> <a href="#ticket" class="nav-link has-dropdown"><i class="fas fa-store"></i> <span>基本功能</span></a>
+              <ul class="dropdown-menu">
+		    
+		    <li><a class="nav-link" href='?c=session&a=changePasswordForm'>修改密码</a></li>
+			<li><a class="nav-link" href="?c=speed&a=speedFrom">带宽限制</a></li>
+			<li><a class="nav-link" href='?c=cache&a=cacheFrom'>缓存设置</a></li>
+			<li><a class="nav-link" href="?c=cacheclean&a=cachecleanFrom">清除缓存</a></li>
+			{{if $user.cdn==0}}
+            <li><a class="nav-link" class="cwdy" href='?c=info&a=showErrorPage'>自定义错误页</a></li>
+
+			<li><a class="nav-link" href='?c=response&a=gzipFrom'>GZIP压缩</a></li>
+			<li><a class="nav-link" href='?c=mime&a=mimeFrom'>MIME设置</a></li>
+			<li><a class="nav-link" href='?c=indexfile&a=indexfileFrom'>默认首页文件</a></li>
+			<li><a class="nav-link" href='?c=rewrite&a=rewriteFrom'>域名跳转</a></li>
+			<li><a class="nav-link" href='javascript:rebootProcess();'>重启进程</a></li>
+			{{/if}}
+              </ul>
+            </li>
+			{{if $user.cdn==0}}
+            <li class="dropdown"> <a href="#ticket" class="nav-link has-dropdown"><i class="fas fa-server"></i> <span>FTP/文件管理</span></a>
+              <ul class="dropdown-menu">
+		    {{if $webftp_url}}
+		    <li><a class="nav-link" href='{{$webftp_url}}'>在线文件管理器</a></li>
+			{{/if}}
+		    <li><a class="nav-link" href='?c=shell&a=index'>数据备份</a></li>
+			{{if $user.ftp>0}}
+			<li><a class="nav-link" href='?c=index&a=ftpForm'>FTP设置</a></li>
+			{{/if}} {{if $ssl}}
+			<li><a class="nav-link" href='?c=index&a=sslForm'>SSL证书</a></li>
+			{{/if}} {{if $user.ssi}}
+			<li><a class="nav-link" href='?c=ssi&a=show'>SSI设置</a></li>
+            {{/if}}
+              </ul>
+            </li>
+            <li><a class="nav-link" href="http://{{$smarty.server.SERVER_NAME}}:3313/mysql/?pma_username={{$user.db_name}}"><i class="fas fa-book"></i> <span> phpMyAdmin</span></a></li>
+			{{/if}}
+			
+			
+			
+            <li class="dropdown"> <a href="#ticket" class="nav-link has-dropdown"><i class="fas fa-cog"></i> <span>安全设置</span></a>
+              <ul class="dropdown-menu">
+		    <li><a class="nav-link" href='?c=banip&a=addTableFrom'>IP黑名单</a></li>
+		    <li><a class="nav-link" href='?c=protection&a=addProtectionTableFrom'>防盗链</a></li>
+			<li><a class="nav-link" href='?c=antisql&a=antisqlFrom'>防SQL注入</a></li>
+			<li><a class="nav-link" href='?c=antiupload&a=antiuploadFrom'>防木马上传</a></li>
+			{{if $user.cdn==0}}
+			<li><a class="nav-link" href='?c=anticc&a=anticcFrom'>防CC攻击</a></li>
+			{{/if}}
+              </ul>
+            </li>
+
+
+            <li class="dropdown"> <a href="#ticket" class="nav-link has-dropdown"><i class="fas fa-book"></i> <span>高级管理</span></a>
+              <ul class="dropdown-menu">
+		    <li><a class="nav-link" href='?c=flow&a=viewFlow&t=day'>流量图</a></li>
+		    <li><a class="nav-link" href='?c=connection&a=connectionFrom'>连接信息</a></li>
+			{{if $user.cdn==0}}
+			<!--li><a href='/vhost/log.php/' target='_blank'>日志分析</a></li-->
+			<li><a class="nav-link" href='?c=capability&a=capabilityFrom'>性能分析</a></li>
+			{{if $user.cron>0}}
+			<li><a class="nav-link" href='?c=cron&a=index'>计划任务</a></li>
+			{{/if}}
+			<li><a class="nav-link" href='?c=httpauth&a=index'>HTTP认证</a></li>
+			{{/if}}
+              </ul>
+            </li>
+          </ul>
+          <div class="mt-4 mb-4 p-3 hide-sidebar-mini"> <a href="?c=session&a=logout" class="btn btn-primary btn-lg btn-block btn-icon-split"> <i class="fab fa-telegram-plane"></i> 退出登录 </a> </div>
+        </aside>
+      </div>

@@ -1,0 +1,88 @@
+<script language='javascript' src='{{$STATIC}}js/banip.js'></script>
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>IP黑名单</h1>
+            <div class="section-header-breadcrumb">
+            </div>
+          </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card-box">
+
+                            <div class="row">
+							<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+							<div style=" height:7px;"></div>
+<table class="table" cellpadding="0" cellspacing="0">
+	<thead class="thead-default">
+		<tr>
+			<th>操作</th>
+			<th>禁止IP</th>
+			<th>禁止时间</th>
+		</tr>
+	</thead>
+	<tbody>
+	{{foreach from=$ips item=row}}
+	<tr>
+		<td ><a href="javascript:banip_del({{$row.id}})">删除</a></td>
+		<td>{{$row.ip}}</td>
+		<td>{{if $row.expire==0}}永久{{else}}{{ceil(($row.expire-time())/60)}}{{/if}}</td>
+	</tr>
+	{{/foreach}}
+	</tbody>
+</table>
+
+
+
+                          <br /><br /><div class="col-md-12">
+						  <span style="font-size:16px;"><b>功能参数设置</b></span><hr /><br />
+						  	<form action='?c=banip&a=addBanip' method='post'>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">功能开关</label>
+								 <div class="col-sm-4">
+				{{if $at==0}} 
+				                              <label class="switch">
+				<input type="checkbox" onclick="javascript:banip_checkon(1)" title='开启功能' data-plugin="switchery" data-color="#64b0f2" data-size="small">
+                                 <span></span>                              </label>
+		        {{else}} 
+				                              <label class="switch">
+				<input type="checkbox" onclick="javascript:banip_checkon(2)" title='关闭功能' checked="checked" data-plugin="switchery" data-color="#64b0f2" data-size="small">
+                                 <span></span>                              </label>
+				{{/if}}
+                                  </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">禁止IP/IP段</label>
+								 <div class="col-sm-4">
+                                    <input name='ip' id='ip' size="15" class="form-control" placeholder=""/>             </div>
+								 <div class="col-sm-4">
+                                    * 禁止单个IP：192.168.0.1&nbsp;&nbsp;&nbsp;禁止IP段：192.168.0.1/24                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">禁止时间</label>
+								 <div class="col-sm-4">
+                                    <input name='life_time' id='life_time' value='0' size="4" class="form-control" />             </div>
+								 <div class="col-sm-4">
+                                    * 0为永久禁止，时间单位为：分钟                               </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+								 <div class="col-sm-4">
+                                    <input type='button' onclick='banip_add();' value='增加' class="btn btn-primary" />             </div>
+                              </div>
+                           </fieldset>
+						   </div>
+						   </form>
+						  
+						  </div>
+
+
+
+</div></div></div></div></div><br>

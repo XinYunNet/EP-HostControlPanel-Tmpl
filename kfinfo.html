@@ -1,0 +1,499 @@
+﻿							<style type="text/css">
+	@charset "utf-8";
+	
+	.jqm-round-wrap {
+		display: block;
+		position: relative;
+		width: 100px;
+		height: 100px;
+		overflow: hidden;
+		border-radius: 65px;
+		-webkit-border-radius: 65px
+	}
+	
+	.jqm-round-sector {
+		position: absolute;
+		width: 100px;
+		height: 100px
+	}
+	
+	.jqm-round-bg {
+		position: absolute;
+		width: 100px;
+		height: 100px;
+		background-color: rgb(103, 119, 239);
+		border-radius: 65px;
+		-webkit-border-radius: 65px
+	}
+	
+	.jqm-round-circle {
+		position: absolute;
+		background-color: #fff;
+		width: 94px;
+		height: 94px;
+		left: 2.5px;
+		top: 2.5px;
+		z-index: 10;
+		border-radius: 60px;
+		-webkit-border-radius: 60px
+	}
+	
+	.jqm-round-circle p {
+		font-size: 14px;
+		line-height: 94px;
+		margin: 0;
+		text-align: center;
+		width: 100%;
+		font-weight: 700
+	}
+	.jiaZai{
+			display: inline-block;
+			height: 130px;
+			margin-left: 40px;
+	}
+</style>
+<script type='text/javascript'>
+var msg = '{{$msg}}';
+	function changePassword() {
+	}
+	function rebootProcess()
+	{
+		if (confirm("确定要重启吗？这将对你现在运行中的网站中断请求！")) {
+			$.get("?c=index&a=rebootProcess", function(data) {
+				alert(data);
+			});
+		}
+	}
+	jQuery(document).ready(function() {
+		jQuery(".item").mouseover(function() {
+			jQuery(this).addClass('onMouseOver');
+		});
+		jQuery(".item").mouseout(function() {
+			jQuery(this).removeClass('onMouseOver');
+		});
+		if (msg != '') {
+			var dlog = art.dialog({id:'id232',time:3,content:msg,title:'提示',icon: 'warning',top:'53%'});
+		}
+	});
+	var webmit = '{{$user.web_quota}}';//{{$quota.web_limit}}在linux下得不到
+	if (webmit == '') {
+		webmit = 0;
+	}
+	if (webmit > 0) {
+		var web_used = '{{$quota.web_used}}';
+		if (web_used == '') {
+			web_used = 0;
+		}
+		var web_use_len = (web_used / webmit) * 100;
+		//web_use_len = 30;
+		var dbmit = '{{$quota.db_limit}}';
+		var db_used = '{{$quota.db_used}}';
+		if (db_used == '') {
+			db_used = 0;
+		}
+		if (dbmit == "") {
+			dbmit = 0;
+		}
+		if (dbmit > 0) {
+			var db_use_len = (db_used / dbmit) * 100;
+		}
+		jQuery(document).ready(function() {
+			if (web_use_len != null && web_use_len != 'undefined') {
+								if (web_use_len < 1) {
+									web_use_len = 1;
+								}
+								if (web_use_len > 100) {
+									web_use_len = 100;
+								}
+								jQuery("#webdd").html("WEB磁盘空间：<div class='progress progress-striped' title='总大小："
+														+ webmit
+														+ "M   已使用："
+														+ web_use_len.toFixed(2)
+														+ "%'><progress class='progress progress-striped progress-info' value='"
+														+ web_use_len.toFixed(2)
+														+ "' max='100'></progress></div>");
+							}
+							if (db_use_len != null && db_use_len != 'undefined') {
+								if (db_use_len < 1) {
+									db_use_len = 1;
+								}
+								if (db_use_len > 100) {
+									db_use_len = 100;
+								}
+								jQuery("#db").html("数据库空间：<div class='progress progress-striped' title='总大小："
+														+ dbmit
+														+ "M   已使用："
+														+ db_use_len.toFixed(2)
+														+ "%'><progress class='progress progress-striped progress-warning' value='"
+														+ db_use_len.toFixed(2)
+														+ "' max='100'></progress></div>");
+							}
+						});
+	}
+</script>
+
+
+
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>面板首页</h1>
+            <div class="section-header-breadcrumb">
+            </div>
+          </div>
+
+                <div class="row">
+                       <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
+					   
+                        <div class="card-box tilebox-two">
+							{{if $user.cdn==0}}
+                            <a href="javascript:rebootProcess();" class="btn btn-sm btn-primary waves-effect waves-light pull-xs-right">重启主机</a>
+                            <h6 class="text-muted text-uppercase m-b-15">主机状态</h6>
+							{{/if}}
+							
+							{{if $user.cdn==1}}
+                            <a href="javascript:rebootProcess();" class="btn btn-sm btn-primary waves-effect waves-light pull-xs-right">Reboot CDN</a>
+                            <h6 class="text-muted text-uppercase m-b-15">CDN状态</h6>
+							{{/if}}
+                            <h4 class="m-b-20">
+						{{if $user.status==3}}
+                              <span style="color: #FF9900;">数据库超限</span>
+						{{elseif $user.status==2}}
+                              <span style="color: #FF9900;">流量超限</span>
+						{{elseif $user.status==1}}
+                              <span style="color: #FF0000;">暂停</span>
+						{{else}}
+                              <span style="color:#009900;">正常</span>
+						{{/if}}
+							</h4>
+							<hr /><div style="height:10px;"></div>
+							{{if $user.cdn==0}}
+							<span id="webdd"></span>
+			                {{if $quota.db_limit}}
+							<div style="height:5px;"></div>
+			                <span id="db"></span>
+                           {{/if}}
+							{{/if}}
+							<p>月流量：{{if $user.flow_limit}}<span id="liuLiang">{{$user.flow_limit}}</span>G{{else}}<span id="liuLiang">不限</span>{{/if}} &nbsp; ( 已用：{{number_format($flow.flow/1024,2)}}M /<span id="yiYong">{{number_format($flow.flow/1024/1024,2)}}</span> G) </p>
+							<p>绑定域名限制：{{if $user.domain==-1}}不限{{else}}{{$user.domain}}个{{/if}}</p>
+							<p>最大连接数：{{if $user.max_connect==0}}不限{{else}}{{$user.max_connect}}{{/if}}</p>
+							<p>缓存命中率：{{if $flow.flow>0}}{{number_format($flow.flow_cache*100/$flow.flow,2)}}%{{else}}0%{{/if}}</p>
+							<p>带宽：{{if $user.speed_limit==0}}不限{{else}}{{$user.speed_limit/1024/1024*8}}Mbps{{/if}}</p>
+							{{if $user.cdn==0}}
+							<p>语言及版本：{{if $user.module}}{{$user.module}}{{else}}{{$user.templete}}:{{$user.subtemplete}}{{/if}}</p>
+							{{if count($subtempletes)>1 && $user.cs==1}}
+							<form name='frm' action='?c=index&a=changeSubtemplete' method='post'>
+							<p id="col_gray">PHP版本切换： 
+							<select name='subtemplete' onChange='frm.submit()'>
+								<option value=''>--请选择版本--</option>
+								{{foreach from=$subtempletes item=subtemplete}}
+								<option value='{{$subtemplete}}'{{if $subtemplete==$user.subtemplete}}selected{{/if}}>{{$subtemplete}}</option>
+								{{/foreach}}
+							</select>
+							</p>
+							</form>
+						    {{/if}} {{/if}} {{if $module_link}}
+							<p>{{$module_link}}</p>
+							{{/if}}
+                        </div>
+
+						{{if $user.cdn==0}}
+                        <div class="card-box tilebox-tow">
+						    {{if $webftp_url}}
+                            <a href="{{$webftp_url}}" class="btn btn-sm btn-purple waves-effect waves-light pull-xs-right">在线文件管理器</a>
+							{{/if}}
+                            <h6 class="text-muted text-uppercase m-b-20">FTP账号信息</h6><hr />
+							<p>FTP地址：{{$smarty.server.SERVER_NAME}}</p>
+							<p>FTP端口：21</p>
+							<p>FTP用户名：{{$user.name}}</p>
+							<p>FTP密码：同控制面板登录密码</p>
+			                {{if $quota.db_limit}}
+							<br />
+                            <a href="http://{{$smarty.server.SERVER_NAME}}:3313/mysql/?pma_username={{$user.db_name}}" target='_blank' class="btn btn-sm btn-success waves-effect waves-light pull-xs-right">phpMyAdmin</a>
+                            <h6 class="text-muted text-uppercase m-b-20">数据库信息</h6><hr />
+							{{if $user.db_type!='sqlsrv'}}
+							<p>数据库地址：{{$node.db_host}}</p>
+							<p>数据库端口：{{$node.db_port}}</p>
+							{{/if}}
+							<p>数据库名：{{$user.db_name}}</p>
+							<p>数据库用户名：{{$user.db_name}}</p>
+							<p>数据库密码：初始密码同FTP密码 &nbsp;[ <a href="?c=session&amp;a=changePasswordForm">修改密码</a> ]</p>
+							{{/if}}
+                        </div>
+                       {{/if}}
+					  	{{if $user.cdn==1}}
+                        <div class="card-box tilebox-tow" >
+						 <h6 class="text-muted text-uppercase m-b-15">仪表盘</h6>
+							<hr><div style="height:10px;"></div>
+							<div class="jiaZai">
+								<h6 class="text-muted text-uppercase m-b-15">缓存命中率：</h6>
+								<div class="jqm-round-wrap">
+									<div class="jqm-round-bg"></div>
+									<canvas id="jqm-round-sector0" class="jqm-round-sector"></canvas>
+									<div class="jqm-round-circle"><p>{{if $flow.flow>0}}{{number_format($flow.flow_cache*100/$flow.flow,2)}}%{{else}}0%{{/if}}</p></div>
+								</div>
+							</div>
+							<div class="jiaZai">
+								<h6 class="text-muted text-uppercase m-b-15">已使用流量：</h6>
+								<div class="jqm-round-wrap">
+									<div class="jqm-round-bg"></div>
+									<canvas id="jqm-round-sector1" class="jqm-round-sector"></canvas>
+									<div class="jqm-round-circle"><p id="baiFenBi">100%</p></div>
+								</div>
+							</div>
+							
+							
+                        </div>
+						
+						
+						
+<script type="text/javascript">
+	var zongLiuLiang=document.getElementById("liuLiang").innerHTML;
+	var yiYong=document.getElementById("yiYong").innerHTML;
+	var baiFenBI=yiYong/zongLiuLiang*100+"%";
+	if(baiFenBI=="NaN%"){
+	baiFenBI="不限流量"
+	}
+	document.getElementById("baiFenBi").innerHTML=baiFenBI;
+	
+
+	var pie = {
+	run: function(opts) {
+		if (!opts.id) throw new Error("must be canvas id.");
+		var canvas = document.getElementById(opts.id),
+			ctx;
+		if (canvas && (ctx = canvas.getContext("2d"))) {
+			canvas.width = canvas.height = "200";
+			var noop = function() {};
+			var before = opts.onBefore || noop;
+			var after = opts.onAfter || noop;
+			before(ctx);
+			ctx.fillStyle = opts.color || 'rgb(103, 119, 239)';
+			var step = opts.step || 1;
+			var delay = opts.delay || 10;
+			var i = 0,
+				rage = 360 * (opts.percent || 0);
+			var sRage = -Math.PI * 0.5;
+			var djs = function() {
+				i = i + step;
+				if (i <= rage) {
+					ctx.beginPath();
+					ctx.moveTo(100, 100);
+					ctx.arc(100, 100, 100, sRage, Math.PI * 2 * (i / 360) + sRage);
+					ctx.fill();
+					setTimeout(djs, delay);
+				} else {
+					after(ctx);
+				}
+			};
+			djs();
+		}
+	}
+};
+var p = 0;
+var len = $(".jqm-round-wrap").length;
+for (p = 0; p < len; p++) {
+	var k = $("#jqm-round-sector" + p).next(".jqm-round-circle").find("p").html();
+	k = percentTofloat(k);
+	pie.run({
+		id: "jqm-round-sector" + p,
+		percent: k,
+		onBefore: function(ctx) {
+			ctx.fillStyle = '#e8e8e8';
+			ctx.beginPath();
+			ctx.moveTo(100, 100);
+			ctx.arc(100, 100, 100, 0, Math.PI * 2);
+			ctx.fill();
+		}
+	});
+}
+
+function percentTofloat(km) {
+	if (km.substring(km.length - 1, km.length) == "%") {
+		km = km.substring(0, km.length - 1);
+		km = km / 100;
+	}
+	return km;
+}
+
+</script>
+						
+                       {{/if}}
+						</div>
+						
+						
+					   <div class="col-xs-12 col-md-6 col-lg-6 col-xl-9">
+					   
+                        <div class="card-box">
+                         <section class="icon-list-demo">
+						 
+						<div class="section-title" style="margin-top: 0;">基本功能</div>
+						<div class="row">
+                                    <a href="?c=domain&a=show">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-globe-alt"></i> <span style="color:#333333;">域名绑定</span>
+                                    </div></a>
+
+                                    <a href="?c=session&a=changePasswordForm">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-lock"></i> <span style="color:#333333;">修改密码</span>
+                                    </div></a>
+
+                                    <a href="?c=speed&a=speedFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-hourglass-alt"></i> <span style="color:#333333;">带宽限制</span>
+                                    </div></a>
+
+                                    <a href="?c=cache&a=cacheFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-invert-colors"></i> <span style="color:#333333;">缓存设置</span>
+                                    </div></a>
+
+                                    <a href="?c=cacheclean&a=cachecleanFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-invert-colors-off"></i> <span style="color:#333333;">清除缓存</span>
+                                    </div></a>
+
+                                    {{if $user.cdn==0}}
+									<a href="?c=info&a=showErrorPage">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-label-heart"></i> <span style="color:#333333;">自定义错误页</span>
+                                    </div></a>
+									
+                                    <a href="?c=response&a=gzipFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-dropbox"></i> <span style="color:#333333;">GZIP压缩</span>
+                                    </div></a>
+
+                                    <a href="?c=mime&a=mimeFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-codepen"></i> <span style="color:#333333;">MIME设置</span>
+                                    </div></a>
+
+                                    <a href="?c=indexfile&a=indexfileFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-file"></i> <span style="color:#333333;">默认首页文件</span>
+                                    </div></a>
+									{{/if}}
+
+                                    <a href="?c=rewrite&a=rewriteFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-redo"></i> <span style="color:#333333;">域名跳转</span>
+                                    </div></a>
+
+									{{if $user.cdn==0}}
+                                    <a href="javascript:rebootProcess();">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-refresh-alt"></i> <span style="color:#333333;">重启主机</span>
+                                    </div></a>
+									{{/if}}
+									{{if $user.cdn==1}}
+
+									{{/if}}
+						 </div>
+						 
+						 
+									{{if $user.cdn==0}}
+									{{if $dbadmin_url}}
+									</br>
+						<div class="section-title" style="margin-top: 0;">数据库管理</div>
+						<div class="row">
+									<a href="{{$dbadmin_url}}" target='_blank'>
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-12">
+                                        <i class="zmdi zmdi-collection-text"></i> <span style="color:#333333;">phpMyAdmin</span>
+                                    </div></a>
+						</div>
+						{{/if}}{{/if}}
+
+
+						{{if $user.cdn==0}}
+						</br>
+						<div class="section-title" style="margin-top: 0;">FTP/文件管理</div>
+						<div class="row">
+						           {{if $webftp_url}}
+									<a href="{{$webftp_url}}">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-folder-star"></i> <span style="color:#333333;">在线文件管理器</span>
+                                    </div></a>
+									{{/if}}
+									<a href="?c=shell&a=index">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-cloud-done"></i> <span style="color:#333333;">数据备份</span>
+                                    </div></a>
+									{{if $user.ftp>0}}
+									<a href="?c=index&a=ftpForm">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-upload"></i> <span style="color:#333333;">FTP设置</span>
+                                    </div></a>
+									{{/if}} {{if $ssl}}
+									{{/if}} {{if $user.ssi}}
+									<a href="?c=ssi&a=show">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-wrench"></i> <span style="color:#333333;">SSI设置</span>
+                                    </div></a>
+									{{/if}}
+						</div>
+						{{/if}}
+						<div class="section-title" style="margin-top: 0;">安全设置</div>
+						<div class="row">
+									<a href="?c=banip&a=addTableFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-block-alt"></i> <span style="color:#333333;">IP黑名单</span>
+                                    </div></a>
+									<a href="?c=protection&a=addProtectionTableFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-flash-off"></i> <span style="color:#333333;">防盗链</span>
+                                    </div></a>
+									<a href="?c=antisql&a=antisqlFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-format-color-fill"></i> <span style="color:#333333;">防SQL注入</span>
+                                    </div></a>
+									<a href="?c=antiupload&a=antiuploadFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-layers-off"></i> <span style="color:#333333;">防木马上传</span>
+                                    </div></a>
+									<a href="?c=anticc&a=anticcFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-shield-security"></i> <span style="color:#333333;">防CC攻击</span>
+                                    </div></a>
+						</div>
+</br>
+						<div class="section-title" style="margin-top: 0;">高级管理</div>
+						<div class="row">
+									<a href="?c=flow&a=viewFlow&t=day">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-collection-bookmark"></i> <span style="color:#333333;">流量图</span>
+                                    </div></a>
+									<a href="?c=connection&a=connectionFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-link"></i> <span style="color:#333333;">连接信息</span>
+                                    </div></a>
+									{{if $user.cdn==0}}
+									<!--a href='/vhost/log.php/' target='_blank'>
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-device-hub"></i> <span style="color:#333333;">日志分析</span>
+                                    </div></a-->
+									<a href="?c=capability&a=capabilityFrom">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-receipt"></i> <span style="color:#333333;">性能分析</span>
+                                    </div></a>
+									{{if $user.cron>0}}
+									<a href="?c=cron&a=index">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-star-outline"></i> <span style="color:#333333;">计划任务</span>
+                                    </div></a>
+									{{/if}}
+									<a href="?c=httpauth&a=index">
+									<div class="col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xs-6"style="height: 50px;width: 290px;" >
+                                        <i class="zmdi zmdi-globe-lock"></i> <span style="color:#333333;">HTTP认证</span>
+                                    </div></a>
+									{{/if}}
+						</div>
+
+
+						 </section>
+						</div>
+					   </div>				
+					
+				</div>
+<div style="height:50px;"></div>

@@ -1,0 +1,52 @@
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>FTP设置</h1>
+            <div class="section-header-breadcrumb">
+            </div>
+          </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card-box">
+
+                            <div class="row">
+							<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                          <br /><div class="col-md-12">
+						  <span style="font-size:16px;"><b>FTP设置</b>&nbsp;&nbsp;&nbsp;<a href="ftp://{{$user.name}}@{{gethostbyname($smarty.server.SERVER_NAME)}}" target='_blank'><div class="label label-warning">在线FTP</div></a></span><hr /><br />
+						<form action='?c=index&a=ftp' method='post'>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">FTP开关</label>
+                                 <div class="col-sm-8">
+                                <div class="radio radio-success radio-inline">
+                                 <input id="inlineradio1" type="radio" name='ftp' value='1' {{if $user.ftp==1}}checked{{/if}}>
+                                 <label for="inlineradio1">启用</label></div>	
+								 <div class="radio radio-inline">
+                                 <input id="inlineradio2" type="radio" name="ftp" value='2' {{if $user.ftp==2}}checked{{/if}}>
+                                 <label for="inlineradio2">禁用</label></div>
+                                 </div>  
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">FTP目录</label>
+                                 <div class="col-sm-4">
+								 <input name="ftp_subdir" type='text' placeholder="默认为根目录" value="{{$user.ftp_subdir}}" class="form-control">
+                                  </div>
+								 <div class="col-sm-4">
+                                    * 多级目录格式如：wwwroot/view/default                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+                                 <div class="col-sm-4">
+                                    <input type='submit' class="btn btn-primary" value='提交'>                               </div>
+                              </div>
+                           </fieldset>
+						   </form>
+						  </div>
+
+
+
+</div></div></div></div></div><br>

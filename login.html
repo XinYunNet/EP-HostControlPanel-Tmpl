@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>用户登录 - 控制面板</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+<meta content="Coderthemes" name="author" />
+<link href="{{$STATIC}}style/login/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="{{$STATIC}}style/login/css/app.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="auth-fluid-pages pb-0">
+<div class="auth-fluid"> 
+  <!--Auth fluid left content -->
+  <div class="auth-fluid-form-box">
+    <div class="align-items-center d-flex h-100">
+      <div class="card-body"> 
+        
+        <!-- Logo -->
+        <div class="auth-brand text-center text-lg-left">
+          <h3> 用户登录 - 控制面板 </h3>
+        </div>
+        
+        <!-- title-->
+        <h4 class="mt-0">账户登录</h4>
+        
+        <!-- form -->
+        <form action="index.php?c=session&a=login" method=post name="form1">
+          <div class="form-group">
+            <label for="emailaddress">账号</label>
+            <input class="form-control"  name="username" id="username"  required="" placeholder="账号">
+          </div>
+          <div class="form-group">
+            <label for="password">密码</label>
+            <input class="form-control" type="password" name="passwd" required="" id="password" placeholder="密码">
+          </div>
+          {{if $img}}
+          <div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-adjust"></span></span>
+            <input type="text" class="form-control input-lg" name="imgnumber" placeholder="输入验证码" autocomplete="off" required>
+            <span class="input-group-addon" style="padding: 0"> <img src="?c=session&a=initImg&action=init"> </span> </div>
+          <br/>
+          {{/if}}
+          <div class="form-group mb-3">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="checkbox-signin">
+              <label class="custom-control-label" for="checkbox-signin">记住账户</label>
+            </div>
+          </div>
+          <div class="form-group mb-0 text-center">
+            <input type="submit" value="登陆" class="btn btn-primary btn-block"/>
+          </div>
+          <!-- social-->
+        </form>
+        <!-- end form--> 
+        
+      </div>
+      <!-- end .card-body --> 
+    </div>
+    <!-- end .align-items-center.d-flex.h-100--> 
+  </div>
+  <!-- end auth-fluid-form-box--> 
+  
+  <!-- Auth fluid right content -->
+  <div class="auth-fluid-right text-center">
+    <div class="auth-user-testimonial">
+      <h2 class="mb-3"> 用户登录 控制面板</h2>
+    </div>
+    <!-- end auth-user-testimonial--> 
+  </div>
+  <!-- end Auth fluid right content --> 
+</div>
+<!-- end auth-fluid--> 
+{{dispatch c='index' a='foot'}} 
+<!-- App js --> 
+<script src="{{$STATIC}}style/login/js/app.min.js"></script>
+</body>
+</html>

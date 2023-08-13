@@ -1,0 +1,111 @@
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 class="page-title">HTTP认证&nbsp;&nbsp;&nbsp;<a href='?c=httpauth&a=sync'><div class="label label-danger">重建</div></a></h4>
+                    </div>
+                </div>
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>HTTP鉴权</h1>
+            <div class="section-header-breadcrumb">
+            </div>
+          </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card-box">
+                            <div class="row">
+							<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+							<div style=" height:7px;"></div>
+	<table class="table">
+		<thead class="thead-default">
+			<tr>
+				<th>操作</th>
+				<th>用户名</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{foreach from=$httpusers item=httpuser}}
+			<tr>
+				<td>[<a href='?c=httpauth&a=del&httpuser={{$httpuser.user}}'>删除</a>]
+					[<a href="" data-toggle="modal" data-target="#changePassword" onclick=changePassword("{{$httpuser.user}}")>修改密码</a>]
+				</td>
+				<td>{{$httpuser.user}}</td>
+			</tr>
+			{{/foreach}}
+		</tbody>
+	</table>
+
+
+
+                          <br /><br /><div class="col-md-12">
+						  <span style="font-size:16px;"><b>功能参数设置</b></span><hr /><br />
+						  	<form action='?c=httpauth&a=add' method='post'>
+							<legend>增加用户</legend>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">用户名</label>
+								 <div class="col-sm-4">
+								 <input name='httpuser' class="form-control" />
+                                  </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">密码</label>
+								 <div class="col-sm-4">
+								 <input name='passwd' class="form-control" />
+                                  </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+								 <div class="col-sm-4">
+						  <input type='submit' value='增加用户' class="btn btn-primary" />
+                                  </div>
+                              </div>
+                           </fieldset>
+						   </form>
+						  </div>
+
+
+
+</div></div></div></div></div><br>
+
+<div id="changePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+               <h4 id="myModalLabel" class="modal-title"><div id='changePasswordTitle2'></div></h4>
+            </div>
+            <div class="modal-body">
+	<form action='?c=httpauth&a=changePassword' method='POST'>
+		<div class="modal-body">
+			<p>
+				输入新密码 <input name='httpuser' type=hidden value='' id='httpuser' /> <input name='passwd' id='passwd' />
+			</p>
+		</div>
+		<div class="modal-footer">
+       <input type='submit' class="btn btn-primary" value='修改'>
+		</div>
+	</form>
+	</div>
+	</div>
+	</div>
+</div>
+
+<script language='javascript'>
+	function changePassword(httpuser)
+	{
+		$("#changePasswordTitle2").html("修改"+httpuser+"的密码");
+		$("#httpuser").val(httpuser);
+		$("#changePassword").show();
+		$("#passwd").focus();
+	}
+	function hide_div(id)
+	{
+		$("#"+id).hide();
+	}
+</script>
+

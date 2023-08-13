@@ -1,0 +1,106 @@
+<script language='javascript' src='{{$STATIC}}js/speed.js'></script>
+<script language='javascript'></script>
+<div class='pro_msg' style="display: none" id='msg'></div>
+
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>带宽限制</h1>
+            <div class="section-header-breadcrumb">
+            </div>
+          </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card-box">
+
+                            <div class="row">
+							<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+							<div style=" height:7px;"></div>
+	<table class="table" cellpadding="0" cellspacing="0">
+	    <thead class="thead-default">
+		<tr>
+			<th>操作</th>
+			<th>限制模式</th>
+			<th>限制带宽</th>
+			<th>目录</th>
+		</tr>
+		</thead>
+		<tbody>
+		{{foreach from=$sp item=row}}
+		<tr>
+			<td><a href="javascript:speed_del({{$row.id}})">删除</a></td>
+			<td>{{if $row.mode=='s'}}每个请求限制{{elseif
+				$row.mode=='i'}}每IP限制{{else}}分组限制{{/if}}</td>
+			<td>{{$row.limit/1024}}KB/秒</td>
+			<td>{{$row.path}}</td>
+		</tr>
+		{{/foreach}}
+		</tbody>
+	</table>
+<br /><br />
+                          <div class="col-md-12">
+						  <span style="font-size:16px;"><b>功能参数设置</b></span><hr /><div style="height:6px;"></div>
+						  	<form action='?c=speed&a=speedAdd' method='post' name='from'>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">功能开关</label>
+								 <div class="col-sm-4">
+				{{if $at==0}} 
+				                              <label class="switch">
+                                 <input type="checkbox" onclick="javascript:speed_checkon(1)" data-plugin="switchery" data-color="#64b0f2" data-size="small">
+                                 <span></span>                              </label>
+		        {{else}} 
+				                              <label class="switch">
+                                 <input type="checkbox" onclick="javascript:speed_checkon(2)" checked data-plugin="switchery" data-color="#64b0f2" data-size="small" >
+                                 <span></span>                              </label>
+				{{/if}}
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">限制类别</label>
+								 <div class="col-sm-4">
+				     <select name='mode' id='mode' onchange='piao_msg(this.value);' class="form-control">
+						 <option value="speed_limit">每个请求限制</option>
+						 <option value="ip_speed_limit">每IP限制</option>
+						 <option value='gspeed_limit'>分组限制</option>
+				     </select>
+                                  </div>
+								 <div class="col-sm-4">
+                                    * 请选择类别                                 </div>
+                              </div>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">带宽</label>
+								 <div class="col-sm-4">
+						  <input name="limit" id='limit' class="form-control" placeholder="" />
+                                  </div>
+								 <div class="col-sm-4">
+                                    * 例：200，单位：KB/秒。只填数字即可                            </div>
+                              </div>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">目录</label>
+								 <div class="col-sm-4">
+                            <input name='path' placeholder="" onfocus='check_onfocus_value(this.id)' onblur='check_onblur_value(this.id)' id='path' class="form-control" />  
+                                  </div>
+								 <div class="col-sm-4">
+                                    * 可以为空不填                            </div>
+                              </div>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+								 <div class="col-sm-4">
+                            <input type='button' value='增加规则' onclick='speed_add();' class="btn btn-primary" />
+                                  </div>
+                              </div>
+						   </form>
+						   </div>
+
+
+</div></div></div></div></div>
+
+
+
+	<div id='script'></div>
+
+<script language='javascript'>
+//document.getElementById("path").defaultValue='';
+from.limit.focus();
+document.from.path.style.color="#999999"
+</script>

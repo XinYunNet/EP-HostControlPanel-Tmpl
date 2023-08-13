@@ -1,0 +1,93 @@
+<script language='javascript' src='{{$STATIC}}js/protection.js'></script>
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>防盗链设置</h1>
+            <div class="section-header-breadcrumb">
+            </div>
+          </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card-box">
+
+                            <div class="row">
+							<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+							<div style=" height:7px;"></div>
+<table class="table">
+	<thead class="thead-default">
+		<tr>
+			<th>操作</th>
+			<th>目录规则</th>
+		</tr>
+	</thead>
+	<tbody>
+	{{foreach from=$paths item=row}}
+	<tr>
+		<td>[<a href='javascript:protection_del({{$row.id}})'>删除</a>]</td>
+		<td>{{$row.path}}</td>
+	</tr>
+	{{/foreach}}
+	</tbody>
+</table>
+
+                          <br /><br /><div class="col-md-12">
+						  <span style="font-size:16px;"><b>功能参数设置</b></span><hr /><br />
+						  	<form action='?c=protection&a=addPath' method='post'>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">功能开关</label>
+								 <div class="col-sm-4">
+				{{if $name}} 
+				                              <label class="switch">
+                                 <input type="checkbox" onclick="javascript:protection_checkon(0)" title='禁用功能'  checked="checked" data-plugin="switchery" data-color="#64b0f2" data-size="small">
+                                 <span></span>                              </label>
+		        {{else}} 
+				                              <label class="switch">
+                                 <input type="checkbox" onclick="javascript:protection_checkon(1)" title='开启功能' data-plugin="switchery" data-color="#64b0f2" data-size="small">
+                                 <span></span>                              </label>
+				{{/if}}
+                                  </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">保护路径，正则匹配</label>
+								 <div class="col-sm-4">
+                                    <input name='path' id='path' size='40' class="form-control" />             </div>
+								<div class="col-sm-4">* 例：^/download </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">合法来源url</label>
+								 <div class="col-sm-4">
+								 <input name='referer' id='referer' size='40' placeholder="" class="form-control" />
+                                   </div>
+								<div class="col-sm-4">* 正则，不写表示相同主机 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">非法请求重定向</label>
+								 <div class="col-sm-4">
+								 <input name='redirect' id='redirect' size='40' placeholder="" class="form-control" />
+                                   </div>
+								<div class="col-sm-4">* 不写则默认拒绝处理 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+								 <div class="col-sm-1">
+                                    <input type='button' onclick='protection_add()' value='提交设置' class="btn btn-primary" />             </div>
+								 <div class="col-sm-1">
+                                    <a href='javascript:protection_empty()'; class="btn btn-default">清空设置</a>              </div>
+                              </div>
+                           </fieldset>
+						   </form>
+						  
+						  </div>
+
+
+
+</div></div></div></div></div><br>

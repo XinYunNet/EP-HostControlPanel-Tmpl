@@ -1,0 +1,83 @@
+<script language='javascript' src='{{$STATIC}}js/mime.js'></script>
+
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>MIME设置</h1>
+            <div class="section-header-breadcrumb">
+            </div>
+          </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card-box">
+
+                            <div class="row">
+							<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+							<div style=" height:7px;"></div>
+<table class="table" cellpadding="0" cellspacing="0">
+	<thead class="thead-default">
+		<tr>
+			<th>操作</th>
+			<th>文件扩展名</th>
+			<th>MIME类型</th>
+			<th>缓存时间</th>
+			<th>是否压缩</th>
+		</tr>
+	</thead>
+	<tbody>
+	{{foreach from=$mime item=row}}
+	<tr>
+		<td><a href="javascript:del_mime('{{$row.file_ext}}')">删除</a></td>
+		<td>{{$row.file_ext}}</td>
+		<td>{{$row.mime_type}}</td>
+		<td>{{$row.cache_time}} 秒</td>
+		<td>{{if $row.gzip==1}}是{{else}}否{{/if}}</td>
+	</tr>
+	{{/foreach}}
+	</tbody>
+</table>
+                          <br /><br /><div class="col-md-12">
+						  <span style="font-size:16px;"><b>功能参数设置</b></span><hr /><div style="height:6px;"></div>
+                       <form action='?c=mime&a=mimeAdd' method='post'>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">文件扩展名</label>
+								 <div class="col-sm-4">
+						  <input name='file_ext' size='8' class="form-control" placeholder="" id='file_ext' />
+                                  </div>
+								 <div class="col-sm-4">
+                                    * 例：php                                </div>
+                              </div>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">MIME类型</label>
+								 <div class="col-sm-4">
+						  <input name='mime_type' class="form-control" id='mime_type' />
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">缓存时间</label>
+								 <div class="col-sm-4">
+						  <input name='cache_time' class="form-control" value='3600' size='5' id='cache_time' />
+                                  </div>
+								 <div class="col-sm-4">
+                                    * 例：3600，单位时间：秒                                 </div>
+                              </div>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+								 <div class="col-sm-4">
+                             <div class="checkbox checkbox-primary">
+                                    <input type='checkbox' name='gzip' value='1' id='gzip' />
+                                    <label for="gzip">开启压缩</label>
+									</div>
+                                  </div>
+                              </div>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+								 <div class="col-sm-4">
+						  <input type='button' value='增加' onclick='mime_add();' class="btn btn-primary" />
+                                  </div>
+                              </div>
+					   
+						   </form>
+						  
+						  </div>
+</div></div></div></div></div>

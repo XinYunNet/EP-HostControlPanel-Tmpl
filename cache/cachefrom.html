@@ -1,0 +1,115 @@
+<script language='javascript' src='{{$STATIC}}js/cache.js'></script>
+<div class='pro_msg' style="display: none" id='msg'></div>
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>缓存设置</h1>
+            <div class="section-header-breadcrumb">
+            </div>
+          </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card-box">
+
+                            <div class="row">
+							<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+							<div style=" height:7px;"></div>
+	<table class="table" cellpadding="0" cellspacing="0">
+	    <thead class="thead-default">
+		<tr>
+			<th>操作</th>
+			<th>序列</th>
+			<th>设置名称</th>
+			<th>缓存时间</th>
+			<th>值</th>
+		</tr>
+		</thead>
+		<tbody>
+		{{foreach from=$header item=row}}
+		<tr>
+			<td><a href="javascript:cache_del({{$row.id}})">删除</a></td>
+			<td>{{$row.id}}</td>
+			<td>{{$row.name}}</td>
+			<td>{{$row.max_age}} 秒 {{if $row.static}}强制缓存{{/if}}</td>
+			<td>{{$row.val}}</td>
+		</tr>
+		{{/foreach}}
+		</tbody>
+	</table>
+
+                          <br /><br /><div class="col-md-12">
+						  <span style="font-size:16px;"><b>功能参数设置</b></span><hr /><div style="height:6px;"></div>
+						  	<form action='?c=cache&a=cacheAdd' method='post'>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">功能开关</label>
+								 <div class="col-sm-4">
+				{{if $at==0}}  
+				                              <label class="switch">
+                                 <input type="checkbox" onclick="javascript:chche_checkon(1)" title='开启功能' data-plugin="switchery" data-color="#64b0f2" data-size="small">
+                                 <span></span>                              </label>
+		        {{else}} 
+				                              <label class="switch">
+                                 <input type="checkbox" title='禁用功能' onclick="javascript:chche_checkon(2)" checked="checked" data-plugin="switchery" data-color="#64b0f2" data-size="small">
+                                 <span></span>                              </label>
+				{{/if}}
+                                  </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">类型</label>
+								 <div class="col-sm-4">
+				     <select name='mode' id='mode' onchange='pro_msg(this.value);' class="form-control">
+						 <option value="file_ext">文件扩展名</option>
+						 <option value="content-type">content-Type</option>
+						 <option value="url">网址</option>
+				     </select>
+                                  </div>
+								 <div class="col-sm-4">
+                                    * 请选择类型                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">值</label>
+								 <div class="col-sm-4">
+						  <input name="cache_value" id='cache_value' class="form-control"/>
+                                  </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">缓存时间</label>
+								 <div class="col-sm-4">
+						  <input name='max_age' placeholder="" id='max_age' class="form-control" />
+                                  </div>
+								 <div class="col-sm-4">
+                                    * 例：120，单位时间：秒                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+								 <div class="col-sm-4">
+	                            <div class="checkbox checkbox-primary">
+                                    <input type="checkbox" name='static' value='1' id='static'>
+                                   <label for="static"> 强制缓存</label>
+                              </div>	
+                                  </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+								 <div class="col-sm-4">
+						  <input type='button' value='提交设置' onclick='cache_add();' class="btn btn-primary" />
+                                  </div>
+                              </div>
+                           </fieldset>
+						   </form>
+						   </div>
+
+
+</div></div></div></div></div>
+<div id='script'></div><br />

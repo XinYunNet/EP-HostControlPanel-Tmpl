@@ -1,0 +1,107 @@
+<script language='javascript' src='{{$STATIC}}js/domain.js?v=3'></script>
+<div class="main-content">
+	<section class="section">
+		<div class="section-header">
+			<h1>域名管理</h1>
+			<div class="section-header-breadcrumb">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="card-box">
+					<div class="section-title" style="margin-top: 0;">域名管理</div>
+					<div class="row overChang">
+						<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+							<div style=" height:7px;"></div>
+							<table class="table">
+								<thead class="thead-default">
+									<tr>
+
+										<th>域名</th>
+										<th>{{if $user.cdn}}源站IP
+											{{else}}目录{{/if}}</th>
+										<th style="border-left:0">操作</th>
+
+									</tr>
+								</thead>
+								{{foreach from=$list item=row}}
+								<tr id='{{$row.id}}t'>
+
+									<td>{{if $row.ssl}}<i style="color:#82af6f;vertical-align: -.125em;" title="域名成功设置SSL证书"><svg viewBox="64 64 896 896"
+											 fill="currentColor" width="1em" height="1em" data-icon="lock" aria-hidden="true">
+												<path d="M832 464h-68V240c0-70.7-57.3-128-128-128H388c-70.7 0-128 57.3-128 128v224h-68c-17.7 0-32 14.3-32 32v384c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V496c0-17.7-14.3-32-32-32zM332 240c0-30.9 25.1-56 56-56h248c30.9 0 56 25.1 56 56v224H332V240zm460 600H232V536h560v304zM484 701v53c0 4.4 3.6 8 8 8h40c4.4 0 8-3.6 8-8v-53a48.01 48.01 0 1 0-56 0z"></path>
+											</svg></i>&nbsp;{{/if}}<a href='http://{{$row.name}}' target='_blank'>{{$row.name}}</a></td>
+
+
+									<td>{{$row.value}}{{if $row.proto}}&nbsp;({{$row.proto}}){{/if}}&nbsp;[<a href="javascript:domainEdit('{{$row.name}},{{$row.value}}{{if $row.proto}}({{$row.proto}}){{/if}}')">修改</a>]</td>
+									<script type="text/javascript">
+										function domainEdit(name, ip) {
+											var nameArr = name.split(",");
+											document.getElementById('domain').setAttribute('disabled', 'disabled')
+											document.getElementById('domain').value = nameArr[0];
+											document.getElementById("subdir").value = nameArr[1];
+										}
+									</script>
+
+									<td style="border-left:0">[<a href="javascript:domain_del('{{$row.name}}',{{$row.id}})">删除</a>]{{if $user.cdn && $ssl}}&nbsp;[<a
+										 href="?c=index&a=domainSslForm&domain={{$row.name}}">SSL证书</a>]{{/if}}</td>
+								</tr>
+								{{/foreach}}
+
+							</table>
+							<br /><br />
+							<h5 class="m-t-0 m-b-30">增加域名绑定，在添加绑定之前请先解析域名：<font>{{$domain_note}}</font>
+							</h5>
+							<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 col-xl-4 m-t-sm-40">
+								<form name='nodeform' action="javascript:domain_add();" method="post">
+									<div class="form-group row">
+										<label for="inputEmail3" class="col-sm-3 form-control-label">域名</label>
+										<div class="col-sm-9">
+											<input type='text' size='40' class="form-control" name='domain' id='domain' value="{{$domain.domain}}"
+											 placeholder="如：123.com" />
+										</div>
+									</div>
+									{{if $subdir_flag}}
+									<div class="form-group row">
+										<label for="inputPassword3" class="col-sm-3 form-control-label">{{if $user.cdn}}源站IP
+											{{else}}目录{{/if}}</label>
+										<div class="col-sm-9">
+											<input type='text' name='subdir' class="form-control" id='subdir' value="{{$default_subdir}}" size='40' />
+										</div>
+									</div>
+									{{if $user.cdn}}
+									<div class="form-group row">
+										<label for="inputPassword4" class="col-sm-3 form-control-label">回源协议</label>
+										<div class="col-sm-9">
+											<select name="proto" id="proto" onchange="if(this.value=='https')alert('选择此项必须先在源站配置好SSL证书')" class="form-control">
+												<option value="http">http</option>
+												<option value="https">https</option>
+												<option value="follow">协议跟随</option>
+												{{if getRole('admin')}}
+												<option value="tcp">tcp</option>{{/if}}
+											</select>
+										</div>
+									</div>
+									{{/if}}
+									{{/if}}
+									<div class="form-group row">
+										<label for="inputPassword3" class="col-sm-2 form-control-label">&nbsp;</label>
+										<div class="col-sm-10">
+											<input type="button" id='button' class="btn btn-primary" onclick='domain_add();' value="确定" />
+											<input type="button" id='button' class="btn btn-secondary" onclick='piao_domain_import();' value="批量增加" />
+										</div>
+									</div>
+								</form>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<script>
+			nodeform.domain.focus();
+		</script>

@@ -1,0 +1,117 @@
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1>数据备份</h1>
+            <div class="section-header-breadcrumb">
+            </div>
+          </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card-box">
+
+                            <div class="row">
+							<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+							
+                          <br /><div class="col-md-12">
+						  <span style="font-size:16px;"><b>网站文件备份</b></span><hr /><br />
+						<form name='bakupweb' action="?c=shell&a=bakupweb" method="post" target='_blank'>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">设置备份文件密码</label>
+                                 <div class="col-sm-4">
+                                    <input type="text" name='password' required="required" class="form-control">
+                                 </div>                                 
+								 <div class="col-sm-2">
+                                    * 备份文件存放在backup目录                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+                                 <div class="col-sm-4">
+                                    <input type='submit' value='备份' class="btn btn-primary" />                               </div>
+                              </div>
+                           </fieldset>
+						   </form>
+						  </div>
+						  
+                         {{if $user.db_quota>0 && $user.db_type!='sqlsrv'}}
+						  <br /><div class="col-md-12">
+						  <span style="font-size:16px;"><b>数据库备份</b></span><hr /><br />
+                   <form name='mysqlout' action="?c=shell&a=mysqldumpout" method="post" target='_blank'>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">您的数据库密码</label>
+                                 <div class="col-sm-4">
+                                    <input type='password' name='passwd' required="required" class="form-control">
+                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+                                 <div class="col-sm-4">
+                                    <input type='submit' value='备份' class="btn btn-primary" />                               </div>
+                              </div>
+                           </fieldset>
+						  </form> 
+						  </div>
+						  
+						  <br /><div class="col-md-12">
+						  <span style="font-size:16px;"><b>远程数据库导入</b></span><hr /><br />
+					<form name='remotemysqldumpin' action="?c=shell&a=remotemysqldumpin" method="post" target='_blank'>	  
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">远程数据库IP</label>
+                                 <div class="col-sm-4">
+								 <input type='text' name='rehost' id='rehost' size='16' required="required" class="form-control" />
+                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">远程数据库用户名</label>
+                                 <div class="col-sm-4">
+								 <input type='text' name='reuser' id='reuser' size='16' required="required" class="form-control" />
+                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">远程数据库密码</label>
+                                 <div class="col-sm-4">
+								 <input type='password' name='repasswd' id='repasswd' size='16' required="required" class="form-control" />
+                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">远程数据库名</label>
+                                 <div class="col-sm-4">
+								 <input type='text' name='redate' id='redate' size='16' required="required" class="form-control" />
+                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">本地数据库密码</label>
+                                 <div class="col-sm-4">
+								 <input type='password' name='passwd' id='passwd' size='16' required="required" class="form-control" />
+                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+                                 <div class="col-sm-4">
+								 <input type='submit' value='导入' class="btn btn-primary" />
+                                 </div>
+                              </div>
+                           </fieldset>
+						  </form> 
+						  </div>
+						  
+						   {{/if}}
+
+
+</div></div></div></div></div><br />

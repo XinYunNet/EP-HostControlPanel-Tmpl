@@ -1,0 +1,88 @@
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 class="page-title">计划任务</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card-box">
+
+                            <div class="row">
+							<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+							<div style=" height:7px;"></div>
+	<table class="table" cellpadding="0" cellspacing="0">
+	    <thead class="thead-default">
+		<tr>
+			<th>操作</th>
+			<th>执行周期/间隔</th>
+			<th>目标网址</th>
+		</tr>
+		</thead>
+		<tbody>
+		{{foreach from=$crons item=cron}}
+		<tr>
+			<td><a href="?c=cron&a=del&id={{$cron.id}}">删除</a></td>
+			<td>{{$cron.min}} {{$cron.hour}} {{$cron.day}} {{$cron.month}} {{$cron.mday}}</td>
+			<td>{{$cron.cmd}}</td>
+		</tr>
+		{{/foreach}}
+		</tbody>
+	</table>
+
+
+
+                          <br /><br /><div class="col-md-12">
+						  <span style="font-size:16px;"><b>功能参数设置</b></span><hr /><br />
+						  	<form action='?c=cron&a=add' method='post'>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">时间(crontab格式)</label>
+								 <div class="col-sm-4">
+								 <input name='t' placeholder="例：* * * * * 代表每分钟执行一次" class="form-control">
+                                  </div>
+								 <div class="col-sm-4">
+                                    <a href="" data-toggle="modal" data-target="#gsjc"><i class="fa fa-question-circle"></i> crontab格式设置教程</a>                             
+							     </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label">网址</label>
+								 <div class="col-sm-4">
+						  <input name='cmd' class="form-control">
+                                  </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <div class="form-group row">
+                                 <label class="col-sm-2 form-control-label"></label>
+								 <div class="col-sm-4">
+						  <input type='submit' value='增加' class="btn btn-primary" />
+                                  </div>
+                              </div>
+                           </fieldset>
+						   </form>
+						  </div>
+
+
+
+</div></div></div></div></div><br>
+
+   <div id="gsjc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+               <h4 id="myModalLabel" class="modal-title">crontab格式设置教程</h4>
+            </div>
+            <div class="modal-body">
+			
+		    <p>待添加</p>
+			
+			</div>
+            <div class="modal-footer">
+               <button type="button" data-dismiss="modal" class="btn btn-default">关闭</button>
+            </div>
+         </div>
+      </div>
+   </div>
