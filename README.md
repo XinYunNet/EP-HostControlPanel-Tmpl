@@ -4,7 +4,7 @@
 <br>yum install zip
 <br>rm -rf /vhs/kangle/nodewww/webftp/vhost/view/Xinyuntmep1/*
 <br>cd /vhs/kangle/nodewww/webftp/vhost/view
-<br>wget -c -nd -np 源码下载地址（记住，必须压缩文件夹，不是直接压缩文件！！）
+<br>wget -c -nd -np 源码下载地址（记住，必须压缩文件夹，不是直接压缩文件！！）<br>
 unzip -q Xinyuntmep1.zip -d /vhs/kangle/nodewww/webftp/vhost/view
 
 主机页面:
